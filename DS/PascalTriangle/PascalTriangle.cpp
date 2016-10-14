@@ -5,12 +5,12 @@ struct node{
     node* next;
 };
 void solve(int level)
-{
-    node* pascal=new node[level+1];
+{    
+    node* pascal=new node[level+1];//levels of the triangle
 //    memset(pascal, 0, sizeof(pascal));
     printf("1\n1 1\n");
     node* inib=new node;
-    node* terminate=new node;
+    node* terminate=new node;//the back end for all linked list
     inib->value=1;
     inib->next=terminate;
 //    cout<<pascal<<" "<<pascal->next<<"\n";
@@ -22,12 +22,12 @@ void solve(int level)
     for(int x=2; x<=level; x++)
     {
 //        cout<<x<<"x\n";
-        (pascal+x)->value=1;
-        node* visit=&pascal[x-1];
+        (pascal+x)->value=1;//the first number of every level is 1
+        node* visit=&pascal[x-1];//the pointer that visits the previous level
         node* construct=&pascal[x];
         printf("%d ", construct->value);
-        while(visit->next!=terminate)
-        {
+        while(visit->next!=terminate)//Reference to line 13
+        {//construction process
             node* temp=new node;
             temp->value=visit->value+visit->next->value;
 //            cout<<temp->value<<"t ";
