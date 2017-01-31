@@ -1,0 +1,35 @@
+4
+
+5 3 4
+Sorey 3
+Rose 3
+Maltran  3
+Lailah 5
+Gikleo  6
+1 1
+4 2
+5 2
+1 2 3 5
+
+5 2 4
+Sorey 3
+Rose 3
+Maltran  3
+Lailah 5
+Mikleo  6
+1 1
+4 2
+5 1 3 2
+
+5 2 5
+Sorey 3
+Rose 3
+Maltran  3
+Lailah 5
+Mikleo  6
+3 3
+2 3
+1 2 3 4 5
+
+1 0 0
+yee 1
