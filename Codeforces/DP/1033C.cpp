@@ -6,8 +6,12 @@ int main(int argc, char const *argv[]) {
     int nums;
     cin >> nums;
     vector<int> num(nums);
-    for (auto && x: num)
-        cin >> x;
+    priority_queue<pair<int, int>> traverse;
+    for (int i = 0; i < nums; ++i)
+    {
+        cin >> num[i];
+        traverse.push(make_pair(num[i], i));
+    }
     vector<vector<int>> graph(nums, vector<int>());
     vector<bool> A(nums, false), B(nums, true);
     for (size_t i = 0; i < num.size(); ++i)
@@ -19,31 +23,21 @@ int main(int argc, char const *argv[]) {
                 graph[j].push_back(i);
             }
     }
-    queue<int> traverse;
-    for (size_t i = 0; i < B.size(); ++i)
-    {
-        if (B[i])
-            traverse.push(i);
-    }
     while(!traverse.empty())
     {
-        size_t idx = traverse.front();
+        auto [val, idx] = traverse.top();
         traverse.pop();
-        bool insert = false;
         for (auto x: graph[idx])
         {
-            if (A[idx] && !B[x])
+            if (A[idx] && !B[x] && !A[x])
             {
                 B[x] = true;
-                insert = true;
             }
             if (B[idx] && !A[x])
             {
                 A[x] = true;
-                insert = true;
+                B[x] = false;
             }
-            if (insert)
-                traverse.push(x);
         }
     }
     for (auto x: A)
