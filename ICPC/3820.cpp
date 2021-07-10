@@ -1,11 +1,7 @@
-// TLE
+// https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1821
 #include <bits/stdc++.h>
 
 using namespace std;
-
-typedef long double ld;
-
-constexpr const ld err = 1e-9;
 
 inline int lowest_common_ancestor(vector<int> &match, vector<int> &flower,
                                   vector<int> &parent, int a, int b) {
@@ -90,7 +86,7 @@ bool augment(vector<vector<int>> &graph, vector<int> &match,
 }
 
 int solve(vector<int> nodes, unordered_set<int> nums) {
-  vector<vector<int>> graph(nodes.size() + 1);  // 1-base
+  vector<vector<int>> graph(nodes.size() + 1);  // 1-based
   for (int i = 0; i < nodes.size(); ++i) {
     for (int j = i + 1; j < nodes.size(); ++j) {
       if (nums.find(nodes[i] + nodes[j]) != nums.end()) {
@@ -114,62 +110,22 @@ int solve(vector<int> nodes, unordered_set<int> nums) {
   return ans;
 }
 
-inline bool pairable(pair<ld, ld> &a, pair<ld, ld> &b) {
-  auto temp = (a.first + 1) * b.second - a.second * (b.first + 1);
-  if (temp > 0 ? temp < err : (-temp) < err) return true;
-  temp = (a.first + 1) * (b.second + 1) - a.second * b.first;
-  if (temp > 0 ? temp < err : (-temp) < err) return true;
-  temp = a.first * (b.second + 1) - (a.second + 1) * b.first;
-  if (temp > 0 ? temp < err : (-temp) < err) return true;
-  temp = a.first * b.second - (a.second + 1) * (b.first + 1);
-  if (temp > 0 ? temp < err : (-temp) < err) return true;
-  return false;
-}
-
-void solve(vector<pair<ld, ld>> &nodes) {
-  vector<vector<int>> graph(nodes.size() + 1);  // 1-based
-  for (int i = 0; i < nodes.size(); ++i) {
-    for (int j = i + 1; j < nodes.size(); ++j) {
-      if (pairable(nodes[i], nodes[j])) {
-        graph[i + 1].push_back(j + 1);
-        graph[j + 1].push_back(i + 1);
-      }
-    }
-  }
-
-  // blossom
-  // match: index of matching node
-  // status: even = state, odd = state + 1, previous: status[node] < state
-  // parent: parent node during this iteration
-  vector<int> match(graph.size()), status(graph.size(), -1),
-      parent(graph.size());
-  int ans = 0;
-  for (int i = 1, state = 0; i < match.size(); ++i, state += 2) {
-    if (!match[i])
-      if (augment(graph, match, status, parent, state, i)) ++ans;
-  }
-  cout << ans << "\n";
-  for (int i = 1; i < match.size(); ++i) {
-    if (match[i]) {
-      cout << i << " " << match[i] << "\n";
-      match[match[i]] = 0;
-    }
-  }
-}
-
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
 
-  int node_cnt;
-  cin >> node_cnt;
-  ld a, b, c, d;
-  vector<pair<ld, ld>> nodes(node_cnt);
-  for (auto &x : nodes) {
-    cin >> a >> b >> c >> d;
-    x.first = a / b;
-    x.second = c / d;
+  int cases;
+  cin >> cases;
+  while (cases--) {
+    int node_cnt, set_cnt;
+    cin >> node_cnt >> set_cnt;
+    vector<int> nodes(node_cnt);
+    unordered_set<int> nums(set_cnt);
+    for (auto &x : nodes) cin >> x;
+    for (int i = 0, inp; i < set_cnt; ++i) {
+      cin >> inp;
+      nums.insert(inp);
+    }
+    cout << solve(nodes, nums) << "\n";
   }
-
-  solve(nodes);
 }
